@@ -21,6 +21,8 @@ namespace MediaBrowser.Connect.Services.Users
 
     public class UserService : Service
     {
+        // todo direct access to user creation is not what we eventually want; we need something like a CAPTCHA and email verification before submitting to this API call
+        // ideally, we would have a proper account sign up page on mediabrowser.tv, but redirecting users to the forum sign up page would also work
         public UserDto Put(CreateUser request)
         {
             IUserProvider userProvider = GetUserProvider();
