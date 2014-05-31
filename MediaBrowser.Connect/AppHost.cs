@@ -1,6 +1,8 @@
-﻿using Funq;
+﻿using System.Configuration;
+using Funq;
 using MediaBrowser.Connect.Services.Auth;
 using MediaBrowser.Connect.Services.Users;
+using MediaBrowser.Connect.UserDatabase;
 using ServiceStack;
 using ServiceStack.Api.Swagger;
 using ServiceStack.Auth;
@@ -33,11 +35,22 @@ namespace MediaBrowser.Connect
             };
 
             Plugins.Add(authFeature);
+            Plugins.Add(new UserDatabaseFeature {ConnectionString = GetDbConnectionString()});
             Plugins.Add(new SwaggerFeature());
             Plugins.Add(new ValidationFeature());
 
             container.Register<ICacheClient>(new MemoryCacheClient());
-            //container.RegisterValidators(typeof (CreateUserValidator).Assembly);
+            container.RegisterValidators(typeof (CreateUserValidator).Assembly);
+        }
+
+        private string GetDbConnectionString()
+        {
+            var connection = ConfigurationManager.ConnectionStrings["SqliteDatabase"];
+            if (connection != null) {
+                return connection.ConnectionString;
+            }
+
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ServiceStack;
+﻿using MediaBrowser.Connect.Interfaces.Auth;
+using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 
@@ -13,6 +14,7 @@ namespace MediaBrowser.Connect.UserDatabase
             var connectionFactory = OpenDatabase();
 
             appHost.Register<IDbConnectionFactory>(connectionFactory);
+            appHost.RegisterAs<UserAuthenticator, IUserAuthenticator>();
         }
 
         private OrmLiteConnectionFactory OpenDatabase()
