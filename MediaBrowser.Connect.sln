@@ -12,11 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C9FE8B
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.ServiceModel", "MediaBrowser.Connect.ServiceModel\MediaBrowser.Connect.ServiceModel.csproj", "{9284BA88-26B8-4F2A-8042-2F0B81BF30B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Interfaces", "MediaBrowser.Connect.Api\MediaBrowser.Connect.Interfaces.csproj", "{1A038584-CBCF-4B55-98A4-DD6704389A42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Services", "MediaBrowser.Connect.Services\MediaBrowser.Connect.Services.csproj", "{1879C4CC-84B1-436A-AB9D-6384D99D5A3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.UserDatabase", "MediaBrowser.Connect.UserDatabase\MediaBrowser.Connect.UserDatabase.csproj", "{0F4386EE-550A-4FD5-8E24-D588BA557730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Api", "MediaBrowser.Connect.Api\MediaBrowser.Connect.Api.csproj", "{1A038584-CBCF-4B55-98A4-DD6704389A42}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Services", "MediaBrowser.Connect.Services\MediaBrowser.Connect.Services.csproj", "{8A628C30-63BD-4B98-A66C-569FE68F4FEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.ServiceModel", "MediaBrowser.Connect.ServiceModel\MediaBrowser.Connect.ServiceModel.csproj", "{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,20 +32,27 @@ Global
 		{B6373A93-0D4D-4FFF-9C23-5529F58C457A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6373A93-0D4D-4FFF-9C23-5529F58C457A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6373A93-0D4D-4FFF-9C23-5529F58C457A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9284BA88-26B8-4F2A-8042-2F0B81BF30B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9284BA88-26B8-4F2A-8042-2F0B81BF30B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9284BA88-26B8-4F2A-8042-2F0B81BF30B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9284BA88-26B8-4F2A-8042-2F0B81BF30B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1879C4CC-84B1-436A-AB9D-6384D99D5A3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1879C4CC-84B1-436A-AB9D-6384D99D5A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1879C4CC-84B1-436A-AB9D-6384D99D5A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1879C4CC-84B1-436A-AB9D-6384D99D5A3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A038584-CBCF-4B55-98A4-DD6704389A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A038584-CBCF-4B55-98A4-DD6704389A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A038584-CBCF-4B55-98A4-DD6704389A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A038584-CBCF-4B55-98A4-DD6704389A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F4386EE-550A-4FD5-8E24-D588BA557730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F4386EE-550A-4FD5-8E24-D588BA557730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F4386EE-550A-4FD5-8E24-D588BA557730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4386EE-550A-4FD5-8E24-D588BA557730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A628C30-63BD-4B98-A66C-569FE68F4FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A628C30-63BD-4B98-A66C-569FE68F4FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A628C30-63BD-4B98-A66C-569FE68F4FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A628C30-63BD-4B98-A66C-569FE68F4FEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F4386EE-550A-4FD5-8E24-D588BA557730} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
 	EndGlobalSection
 EndGlobal

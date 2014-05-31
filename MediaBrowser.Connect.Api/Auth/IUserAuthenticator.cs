@@ -1,6 +1,6 @@
 ﻿using ServiceStack;
 
-namespace MediaBrowser.Connect.Api.Auth
+namespace MediaBrowser.Connect.Interfaces.Auth
 {
     public interface IUserAuthenticator
     {

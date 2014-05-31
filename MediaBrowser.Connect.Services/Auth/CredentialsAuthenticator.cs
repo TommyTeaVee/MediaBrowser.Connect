@@ -1,4 +1,4 @@
-﻿using MediaBrowser.Connect.Api.Auth;
+﻿using MediaBrowser.Connect.Interfaces.Auth;
 using ServiceStack;
 using ServiceStack.Auth;
 

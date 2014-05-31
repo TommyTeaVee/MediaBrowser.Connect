@@ -7,7 +7,7 @@ namespace MediaBrowser.Connect.ServiceModel.RemoteAccess
     public class CreateAccessToken : IReturn<ServerAccessTokenDto>
     {
         public Guid ServerId { get; set; }
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
         public string AccessToken { get; set; }
     }
 }

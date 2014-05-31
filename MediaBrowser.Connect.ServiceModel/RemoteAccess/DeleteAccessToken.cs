@@ -7,6 +7,6 @@ namespace MediaBrowser.Connect.ServiceModel.RemoteAccess
     public class DeleteAccessToken
     {
         public Guid ServerId { get; set; }
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
     }
 }

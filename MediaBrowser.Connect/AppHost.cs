@@ -21,12 +21,7 @@ namespace MediaBrowser.Connect
         {
             JsConfig.DateHandler = DateHandler.ISO8601;
             LogManager.LogFactory = new NLogFactory();
-
-            container.Register<ICacheClient>(new MemoryCacheClient());
-
-            Plugins.Add(new SwaggerFeature());
-            Plugins.Add(new ValidationFeature());
-
+            
             var authProviders = new IAuthProvider[] {
                 new CredentialsAuthenticator(),
                 new BasicAuthAuthenticator()
@@ -38,6 +33,11 @@ namespace MediaBrowser.Connect
             };
 
             Plugins.Add(authFeature);
+            Plugins.Add(new SwaggerFeature());
+            Plugins.Add(new ValidationFeature());
+
+            container.Register<ICacheClient>(new MemoryCacheClient());
+            //container.RegisterValidators(typeof (CreateUserValidator).Assembly);
         }
     }
 }

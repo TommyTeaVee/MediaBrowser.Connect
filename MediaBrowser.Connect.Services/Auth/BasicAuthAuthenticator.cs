@@ -1,4 +1,4 @@
-﻿using MediaBrowser.Connect.Api.Auth;
+﻿using MediaBrowser.Connect.Interfaces.Auth;
 using ServiceStack;
 using ServiceStack.Auth;
 
@@ -15,8 +15,7 @@ namespace MediaBrowser.Connect.Services.Auth
         {
             var authenticator = authService.TryResolve<IUserAuthenticator>();
 
-            if (authenticator == null)
-            {
+            if (authenticator == null) {
                 Log.Error("No user authenticator has been registered.");
                 return false;
             }
