@@ -70,6 +70,8 @@ namespace MediaBrowser.Connect.UserDatabase
             if (!string.IsNullOrEmpty(user.DisplayName) || !string.IsNullOrEmpty(user.ForumDisplayName)) {
                 UpdateProfileData(user);
             }
+
+            return GetUser(user.Id);
         }
 
         private static string GenerateSalt()
