@@ -38,13 +38,13 @@ namespace MediaBrowser.Connect.UserDatabase
             }
         }
 
-        private string CalculateHashedPassword(string password, string salt)
+        public static string CalculateHashedPassword(string password, string salt)
         {
             // todo if we migrate the auth database from IP.Board, we need to ensure this matches their hashing code
             return (salt.Md5() + password.Md5()).Md5();
         }
 
-        private bool IsUsernameEmailAddress(string username)
+        public static bool IsUsernameEmailAddress(string username)
         {
             return username.Contains("@");
         }

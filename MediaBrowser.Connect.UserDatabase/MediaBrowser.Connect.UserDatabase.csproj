@@ -73,11 +73,17 @@
     <Compile Include="UserAuthenticator.cs" />
     <Compile Include="UserAuthData.cs" />
     <Compile Include="UserDatabaseFeature.cs" />
+    <Compile Include="UserProfileData.cs" />
+    <Compile Include="UserProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MediaBrowser.Connect.Api\MediaBrowser.Connect.Interfaces.csproj">
       <Project>{1a038584-cbcf-4b55-98a4-dd6704389a42}</Project>
       <Name>MediaBrowser.Connect.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MediaBrowser.Connect.ServiceModel\MediaBrowser.Connect.ServiceModel.csproj">
+      <Project>{bb32d72d-885f-4ea6-89d8-2cb0ed3afbf5}</Project>
+      <Name>MediaBrowser.Connect.ServiceModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
