@@ -2,6 +2,8 @@
 using System.Data;
 using MediaBrowser.Connect.Interfaces.Users;
 using MediaBrowser.Connect.ServiceModel.Users;
+using Mono.Data.Sqlite;
+using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 
@@ -16,33 +18,49 @@ namespace MediaBrowser.Connect.UserDatabase
             _connectionFactory = connectionFactory;
 
             using (IDbConnection db = _connectionFactory.Open()) {
+                db.CreateTableIfNotExists<UserAuthData>();
                 db.CreateTableIfNotExists<UserProfileData>();
             }
         }
 
         public UserDto CreateUser(UserDto user, string password)
         {
-            using (IDbConnection db = _connectionFactory.Open()) {
-                string salt = GenerateSalt();
-                var authData = new UserAuthData {
-                    Username = user.ForumUsername,
-                    Email = user.Email,
-                    Salt = salt,
-                    Password = UserAuthenticator.CalculateHashedPassword(password, salt)
-                };
+            try {
+                user.Id = 0;
 
-                authData.Id = (int) db.Insert(authData, true);
+                using (IDbConnection db = _connectionFactory.Open()) {
+                    string salt = GenerateSalt();
+                    var authData = new UserAuthData {
+                        Username = user.ForumUsername,
+                        Email = user.Email,
+                        Salt = salt,
+                        Password = UserAuthenticator.CalculateHashedPassword(password, salt)
+                    };
 
-                var profileData = new UserProfileData {
-                    Id = authData.Id,
-                    CreatedAt = DateTime.UtcNow,
-                    DisplayName = user.DisplayName ?? user.ForumDisplayName ?? user.ForumUsername,
-                    ForumDisplayName = user.ForumDisplayName ?? user.DisplayName ?? user.ForumUsername
-                };
+                    authData.Id = (int) db.Insert(authData, true);
 
-                db.Insert(profileData);
+                    var profileData = new UserProfileData {
+                        Id = authData.Id,
+                        CreatedAt = DateTime.UtcNow,
+                        DisplayName = user.DisplayName ?? user.ForumDisplayName ?? user.ForumUsername,
+                        ForumDisplayName = user.ForumDisplayName ?? user.DisplayName ?? user.ForumUsername
+                    };
 
-                return CreateDto(authData, profileData);
+                    db.Insert(profileData);
+
+                    return CreateDto(authData, profileData);
+                }
+            } catch (SqliteException e) {
+                if (e.Message.Contains("constraint violation")) {
+                    if (e.Message.Contains("Username")) {
+                        throw HttpError.Conflict("A user with that username already exists");
+                    }
+                    if (e.Message.Contains("Email")) {
+                        throw HttpError.Conflict("A user with that email address already exists");
+                    }
+                }
+
+                throw;
             }
         }
 
@@ -54,7 +72,7 @@ namespace MediaBrowser.Connect.UserDatabase
                 var profile = db.SingleWhere<UserProfileData>("Id", userId);
 
                 if (auth == null || profile == null) {
-                    throw new ArgumentException("User not found", "userId");
+                    throw HttpError.NotFound(string.Format("User with ID {0} not found", userId));
                 }
 
                 return CreateDto(auth, profile);
@@ -74,7 +92,7 @@ namespace MediaBrowser.Connect.UserDatabase
             return GetUser(user.Id);
         }
 
-        private static string GenerateSalt()
+        public static string GenerateSalt()
         {
             return new Guid().ToString();
         }
@@ -82,7 +100,7 @@ namespace MediaBrowser.Connect.UserDatabase
         private void UpdateProfileData(UserDto user)
         {
             bool hasDisplayName = !string.IsNullOrEmpty(user.DisplayName);
-            bool hasForumDisplayName = !string.IsNullOrEmpty(user.ForumUsername);
+            bool hasForumDisplayName = !string.IsNullOrEmpty(user.ForumDisplayName);
 
             var profileData = new UserProfileData {Id = user.Id, DisplayName = user.DisplayName, ForumDisplayName = user.ForumDisplayName};
 

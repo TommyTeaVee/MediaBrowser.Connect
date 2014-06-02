@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect", "MediaBrowser.Connect\MediaBrowser.Connect.csproj", "{B6373A93-0D4D-4FFF-9C23-5529F58C457A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C9FE8B6C-60C0-4B61-A496-29E6A47B4D62}"
@@ -21,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Services", "MediaBrowser.Connect.Services\MediaBrowser.Connect.Services.csproj", "{8A628C30-63BD-4B98-A66C-569FE68F4FEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.ServiceModel", "MediaBrowser.Connect.ServiceModel\MediaBrowser.Connect.ServiceModel.csproj", "{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.UserDatabase.Tests", "MediaBrowser.Connect.UserDatabase.Tests\MediaBrowser.Connect.UserDatabase.Tests.csproj", "{945A0D9F-4FDF-4EA0-9D5D-153F655DC925}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,11 +48,16 @@ Global
 		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB32D72D-885F-4EA6-89D8-2CB0ED3AFBF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{945A0D9F-4FDF-4EA0-9D5D-153F655DC925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{945A0D9F-4FDF-4EA0-9D5D-153F655DC925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{945A0D9F-4FDF-4EA0-9D5D-153F655DC925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{945A0D9F-4FDF-4EA0-9D5D-153F655DC925}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0F4386EE-550A-4FD5-8E24-D588BA557730} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
+		{945A0D9F-4FDF-4EA0-9D5D-153F655DC925} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
 	EndGlobalSection
 EndGlobal
