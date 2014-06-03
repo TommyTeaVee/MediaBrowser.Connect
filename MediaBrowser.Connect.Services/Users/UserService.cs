@@ -30,15 +30,23 @@ namespace MediaBrowser.Connect.Services.Users
         }
         
         [Authenticate]
-        public UserDto Get(GetUser request)
+        public object Get(GetUser request)
         {
             IAuthSession session = GetSession();
             if (session == null || !session.IsAuthenticated || (session.Id != request.UserId.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
                 throw new UnauthorizedAccessException();
             }
 
-            IUserProvider userProvider = GetUserProvider();
-            return userProvider.GetUser(request.UserId);
+            var cacheKey = UserCacheKey(request.UserId);
+            return Request.ToOptimizedResultUsingCache(Cache, cacheKey, () => {
+                IUserProvider userProvider = GetUserProvider();
+                return userProvider.GetUser(request.UserId);
+            });
+        }
+
+        private static string UserCacheKey(int userId)
+        {
+            return "users/{0}".Fmt(userId);
         }
 
         [Authenticate]
@@ -50,7 +58,11 @@ namespace MediaBrowser.Connect.Services.Users
             }
 
             IUserProvider userProvider = GetUserProvider();
-            return userProvider.UpdateUser(request, request.Password);
+            var result = userProvider.UpdateUser(request, request.Password);
+
+            Request.RemoveFromCache(Cache, UserCacheKey(request.Id));
+
+            return result;
         }
 
         private IUserProvider GetUserProvider()
