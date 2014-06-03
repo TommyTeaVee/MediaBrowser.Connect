@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MediaBrowser.Connect.ServiceModel.Users
+﻿namespace MediaBrowser.Connect.ServiceModel.Users
 {
     public class UserDto
     {

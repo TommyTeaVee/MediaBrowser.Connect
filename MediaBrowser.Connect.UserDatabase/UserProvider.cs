@@ -79,10 +79,10 @@ namespace MediaBrowser.Connect.UserDatabase
             }
         }
 
-        public UserDto UpdateUser(UserDto user)
+        public UserDto UpdateUser(UserDto user, string password)
         {
-            if (!string.IsNullOrEmpty(user.Email) || !string.IsNullOrEmpty(user.ForumUsername)) {
-                UpdateAuthData(user);
+            if (!string.IsNullOrEmpty(user.Email) || !string.IsNullOrEmpty(user.ForumUsername) || !string.IsNullOrEmpty(password)) {
+                UpdateAuthData(user, password);
             }
 
             if (!string.IsNullOrEmpty(user.DisplayName) || !string.IsNullOrEmpty(user.ForumDisplayName)) {
@@ -117,12 +117,17 @@ namespace MediaBrowser.Connect.UserDatabase
             }
         }
 
-        private void UpdateAuthData(UserDto user)
+        private void UpdateAuthData(UserDto user, string password)
         {
             bool hasEmail = !string.IsNullOrEmpty(user.Email);
             bool hasUsername = !string.IsNullOrEmpty(user.ForumUsername);
+            bool hasPassword = !string.IsNullOrEmpty(password);
 
-            var authData = new UserAuthData {Id = user.Id, Email = user.Email, Username = user.ForumUsername};
+            var authData = new UserAuthData {
+                Id = user.Id,
+                Email = user.Email,
+                Username = user.ForumUsername
+            };
 
             using (IDbConnection db = _connectionFactory.Open()) {
                 if (hasEmail && hasUsername) {
@@ -133,6 +138,14 @@ namespace MediaBrowser.Connect.UserDatabase
                 }
                 if (!hasEmail && hasUsername) {
                     db.UpdateOnly(authData, u => u.Username);
+                }
+
+                if (hasPassword) {
+                    var currentAuthData = db.SingleById<UserAuthData>(user.Id);
+                    var hashedPassword = UserAuthenticator.CalculateHashedPassword(password, currentAuthData.Salt);
+
+                    currentAuthData.Password = hashedPassword;
+                    db.UpdateOnly(currentAuthData, u => u.Password);
                 }
             }
         }

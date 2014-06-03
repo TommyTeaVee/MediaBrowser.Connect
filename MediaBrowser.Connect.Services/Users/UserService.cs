@@ -23,7 +23,7 @@ namespace MediaBrowser.Connect.Services.Users
     {
         // todo direct access to user creation is not what we eventually want; we need something like a CAPTCHA and email verification before submitting to this API call
         // ideally, we would have a proper account sign up page on mediabrowser.tv, but redirecting users to the forum sign up page would also work
-        public UserDto Put(CreateUser request)
+        public UserDto Post(CreateUser request)
         {
             IUserProvider userProvider = GetUserProvider();
             return userProvider.CreateUser(request, request.Password);
@@ -42,7 +42,7 @@ namespace MediaBrowser.Connect.Services.Users
         }
 
         [Authenticate]
-        public UserDto Any(UpdateUser request)
+        public UserDto Post(UpdateUser request)
         {
             IAuthSession session = GetSession();
             if (session == null || !session.IsAuthenticated || (session.Id != request.Id.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
@@ -50,7 +50,7 @@ namespace MediaBrowser.Connect.Services.Users
             }
 
             IUserProvider userProvider = GetUserProvider();
-            return userProvider.UpdateUser(request);
+            return userProvider.UpdateUser(request, request.Password);
         }
 
         private IUserProvider GetUserProvider()

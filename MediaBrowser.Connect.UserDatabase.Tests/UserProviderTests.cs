@@ -163,7 +163,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
                 DisplayName = "Updated Display Name"
             };
 
-            var result = provider.UpdateUser(updates);
+            var result = provider.UpdateUser(updates, null);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ForumDisplayName, Is.EqualTo(updates.ForumDisplayName));
@@ -191,7 +191,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
                 Email = "jsmith_updated@company.com"
             };
 
-            var result = provider.UpdateUser(updates);
+            var result = provider.UpdateUser(updates, null);
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ForumUsername, Is.EqualTo(updates.ForumUsername));
@@ -219,7 +219,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
                 Email = "jsmith_updated@company.com"
             };
 
-            provider.UpdateUser(updates);
+            provider.UpdateUser(updates, null);
 
             var service = new Mock<IServiceBase>();
             var authenticator = new UserAuthenticator(connection);
@@ -252,7 +252,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
                 Email = "jsmith_updated@company.com"
             };
 
-            provider.UpdateUser(updates);
+            provider.UpdateUser(updates, null);
 
             var service = new Mock<IServiceBase>();
             var authenticator = new UserAuthenticator(connection);
@@ -262,6 +262,34 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
 
             Assert.That(isAuthenticatedWithOldUsername, Is.False);
             Assert.That(isAuthenticatedWithNewUsername, Is.True);
+        }
+
+        [Test]
+        public void ChangePassword() 
+        {
+            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
+            var provider = new UserProvider(connection);
+
+            var user = new UserDto {
+                Email = "jsmith@company.com",
+                ForumUsername = "jsmith",
+                ForumDisplayName = "John Smith",
+                DisplayName = "John"
+            };
+
+            var created = provider.CreateUser(user, "password");
+
+            var updates = new UserDto { Id = created.Id };
+            provider.UpdateUser(updates, "changed_password");
+
+            var service = new Mock<IServiceBase>();
+            var authenticator = new UserAuthenticator(connection);
+
+            bool isAuthenticatedWithOldPassword = authenticator.TryAuthenticate(service.Object, user.ForumUsername, "password");
+            bool isAuthenticatedWithNewPassword = authenticator.TryAuthenticate(service.Object, user.ForumUsername, "changed_password");
+
+            Assert.That(isAuthenticatedWithOldPassword, Is.False);
+            Assert.That(isAuthenticatedWithNewPassword, Is.True);
         }
     }
 }
