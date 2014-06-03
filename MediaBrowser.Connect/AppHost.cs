@@ -31,7 +31,7 @@ namespace MediaBrowser.Connect
 
             var authFeature = new AuthFeature(() => new AuthUserSession(), authProviders) {
                 IncludeAssignRoleServices = false,
-                IncludeRegistrationService = false
+                IncludeRegistrationService = false,
             };
 
             Plugins.Add(authFeature);

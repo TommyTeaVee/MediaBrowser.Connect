@@ -2,10 +2,10 @@
 {
     public class UserDto
     {
-        public int Id { get; set; }
-        public string ForumUsername { get; set; }
-        public string Email { get; set; }
-        public string ForumDisplayName { get; set; }
-        public string DisplayName { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string ForumUsername { get; set; }
+        public virtual string Email { get; set; }
+        public virtual string ForumDisplayName { get; set; }
+        public virtual string DisplayName { get; set; }
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="Auth\BasicAuthAuthenticator.cs" />
     <Compile Include="Auth\CredentialsAuthenticator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servers\MbInstanceService.cs" />
     <Compile Include="Users\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

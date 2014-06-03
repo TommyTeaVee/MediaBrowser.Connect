@@ -1,11 +1,11 @@
-﻿using System;
-using ServiceStack;
+﻿using ServiceStack;
 
 namespace MediaBrowser.Connect.ServiceModel.Users
 {
-    [Route("/users/{UserId}", "GET", Summary = "Gets user information.")]
+    [Route("/users/{Id}", "GET", Summary = "Gets user information.")]
     public class GetUser : IReturn<UserDto>
     {
-        public int UserId { get; set; }
+        [ApiMember(Description = "The user's ID", DataType = "string", IsRequired = true, ParameterType = "path")]
+        public int Id { get; set; }
     }
 }

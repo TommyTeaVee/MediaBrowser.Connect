@@ -6,7 +6,7 @@ namespace MediaBrowser.Connect.ServiceModel.Servers
     [Route("/servers/{ServerId}", "POST", Summary = "Updates the connection settings for a Media Browser Server instance.")]
     public class UpdateServerInstance
     {
-        public Guid ServerId { get; set; }
+        public string ServerId { get; set; }
         public string IpAddress { get; set; }
     }
 }

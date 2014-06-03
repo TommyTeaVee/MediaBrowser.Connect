@@ -6,6 +6,5 @@ namespace MediaBrowser.Connect.ServiceModel.Servers
     public class RegisterServerInstance : IReturn<ServerInstanceDto>
     {
         public string IpAddress { get; set; }
-        public string Password { get; set; }
     }
 }

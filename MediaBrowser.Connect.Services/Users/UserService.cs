@@ -33,14 +33,14 @@ namespace MediaBrowser.Connect.Services.Users
         public object Get(GetUser request)
         {
             IAuthSession session = GetSession();
-            if (session == null || !session.IsAuthenticated || (session.Id != request.UserId.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
+            if (session == null || !session.IsAuthenticated || (session.Id != request.Id.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
                 throw new UnauthorizedAccessException();
             }
 
-            var cacheKey = UserCacheKey(request.UserId);
+            var cacheKey = UserCacheKey(request.Id);
             return Request.ToOptimizedResultUsingCache(Cache, cacheKey, () => {
                 IUserProvider userProvider = GetUserProvider();
-                return userProvider.GetUser(request.UserId);
+                return userProvider.GetUser(request.Id);
             });
         }
 
