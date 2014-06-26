@@ -1,17 +1,23 @@
-﻿using MediaBrowser.Connect.Interfaces.Auth;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MediaBrowser.Connect.Interfaces.Auth;
+using MediaBrowser.Connect.Interfaces.Servers;
 using MediaBrowser.Connect.Interfaces.Users;
 using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 
-namespace MediaBrowser.Connect.UserDatabase
+namespace MediaBrowser.Connect.ServerDatabase
 {
-    public class UserDatabase
+    public class ServerDatabase
     {
         public IDbConnectionFactory Connection { get; set; }
     }
 
-    public class UserDatabaseFeature : IPlugin
+    public class ServerDatabaseFeature : IPlugin
     {
         public string ConnectionString { get; set; }
 
@@ -19,9 +25,8 @@ namespace MediaBrowser.Connect.UserDatabase
         {
             var connectionFactory = OpenDatabase();
 
-            appHost.Register(new UserDatabase {Connection = connectionFactory});
-            appHost.RegisterAs<UserAuthenticator, IUserAuthenticator>();
-            appHost.RegisterAs<UserProvider, IUserProvider>();
+            appHost.Register(new ServerDatabase {Connection = connectionFactory});
+            appHost.RegisterAs<ServerProvider, IServerProvider>();
         }
 
         private OrmLiteConnectionFactory OpenDatabase()

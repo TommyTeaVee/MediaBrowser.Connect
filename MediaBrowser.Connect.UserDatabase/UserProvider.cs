@@ -13,9 +13,9 @@ namespace MediaBrowser.Connect.UserDatabase
     {
         private readonly IDbConnectionFactory _connectionFactory;
 
-        public UserProvider(IDbConnectionFactory connectionFactory)
+        public UserProvider(UserDatabase database)
         {
-            _connectionFactory = connectionFactory;
+            _connectionFactory = database.Connection;
 
             using (IDbConnection db = _connectionFactory.Open()) {
                 db.CreateTableIfNotExists<UserAuthData>();

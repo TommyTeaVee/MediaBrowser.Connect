@@ -6,5 +6,6 @@ namespace MediaBrowser.Connect.ServiceModel.Servers
     {
         public string Id { get; set; }
         public string IpAddress { get; set; }
+        public string Name { get; set; }
     }
 }

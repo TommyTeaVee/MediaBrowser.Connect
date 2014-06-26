@@ -33,7 +33,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\packages\ServiceStack.Interfaces.4.0.21\lib\net40\ServiceStack.Interfaces.dll</HintPath>
+      <HintPath>..\packages\ServiceStack.Interfaces.4.0.22\lib\net40\ServiceStack.Interfaces.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +52,7 @@
     <Compile Include="RemoteAccess\GetUsersAccessTokens.cs" />
     <Compile Include="RemoteAccess\ServerAccessTokenDto.cs" />
     <Compile Include="Servers\RegisterServerInstance.cs" />
+    <Compile Include="Servers\ServerInstanceAuthInfoDto.cs" />
     <Compile Include="Servers\ServerInstanceDto.cs" />
     <Compile Include="Servers\UpdateServerInstance.cs" />
     <Compile Include="Users\CreateUser.cs" />
