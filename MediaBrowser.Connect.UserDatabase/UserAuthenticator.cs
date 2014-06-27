@@ -1,4 +1,5 @@
-﻿using MediaBrowser.Connect.Interfaces.Auth;
+﻿using MediaBrowser.Connect.Interfaces;
+using MediaBrowser.Connect.Interfaces.Auth;
 using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;

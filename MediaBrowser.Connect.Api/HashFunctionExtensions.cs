@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace MediaBrowser.Connect.UserDatabase
+namespace MediaBrowser.Connect.Interfaces
 {
     public static class HashFunctionExtensions
     {

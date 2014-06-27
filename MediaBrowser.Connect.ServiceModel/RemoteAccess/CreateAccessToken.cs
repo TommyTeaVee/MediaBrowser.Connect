@@ -1,5 +1,4 @@
-﻿using System;
-using ServiceStack;
+﻿using ServiceStack;
 
 namespace MediaBrowser.Connect.ServiceModel.RemoteAccess
 {

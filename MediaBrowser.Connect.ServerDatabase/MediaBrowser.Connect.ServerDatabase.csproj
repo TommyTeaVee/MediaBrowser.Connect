@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerAccessTokenData.cs" />
     <Compile Include="ServerData.cs" />
     <Compile Include="ServerDatabaseFeature.cs" />
     <Compile Include="ServerProvider.cs" />
