@@ -10,8 +10,8 @@ namespace MediaBrowser.Connect.Interfaces.Servers
 {
     public interface IServerProvider
     {
-        ServerInstanceAuthInfoDto RegisterServerInstance(string name, string ipAddress);
-        ServerInstanceDto UpdateServerInstance(string serverId, string name, string ipAddress);
+        ServerInstanceAuthInfoDto RegisterServerInstance(string name, string url);
+        ServerInstanceDto UpdateServerInstance(string serverId, string name, string url);
         ServerAccessTokenDto RegisterServerAccessToken(string serverId, int userId, string accessToken);
         void RevokeServerAccessToken(string serverId, int userId);
         IEnumerable<ServerAccessTokenDto> GetServerAccessTokens(string serverId);

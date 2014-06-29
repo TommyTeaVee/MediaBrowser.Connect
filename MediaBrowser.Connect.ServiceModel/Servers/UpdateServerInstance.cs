@@ -7,6 +7,6 @@ namespace MediaBrowser.Connect.ServiceModel.Servers
     public class UpdateServerInstance
     {
         public string ServerId { get; set; }
-        public string IpAddress { get; set; }
+        public string Url { get; set; }
     }
 }

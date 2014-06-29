@@ -12,8 +12,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void CanLoginAfterCreatingUser()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase {Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider)};
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -25,7 +25,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
             UserDto result = provider.CreateUser(user, "password");
 
             var service = new Mock<IServiceBase>();
-            var authenticator = new UserAuthenticator(connection);
+            var authenticator = new UserAuthenticator(db.Connection);
 
             bool isAuthenticated = authenticator.TryAuthenticate(service.Object, result.ForumUsername, "password");
 
@@ -35,8 +35,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void CreateUser()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -59,8 +59,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [ExpectedException(typeof (HttpError), ExpectedMessage = "A user with that email address already exists")]
         public void CreateUserFailsOnDuplicateEmail()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -85,8 +85,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [ExpectedException(typeof (HttpError), ExpectedMessage = "A user with that username already exists")]
         public void CreateUserFailsOnDuplicateUsername()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -111,7 +111,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [ExpectedException(typeof (HttpError), ExpectedMessage = "User with ID 30 not found")]
         public void GetUserFailsWithUnrecognizedId()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
+            var connection = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
             var provider = new UserProvider(connection);
 
             provider.GetUser(30);
@@ -120,8 +120,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void GetUserSuccess()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -145,8 +145,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserProfileData() 
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -173,8 +173,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserAuthData()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -201,8 +201,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void LoginWithUpdatedEmail()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -222,7 +222,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
             provider.UpdateUser(updates, null);
 
             var service = new Mock<IServiceBase>();
-            var authenticator = new UserAuthenticator(connection);
+            var authenticator = new UserAuthenticator(db.Connection);
 
             bool isAuthenticatedWithOldEmail = authenticator.TryAuthenticate(service.Object, user.Email, "password");
             bool isAuthenticatedWithNewEmail = authenticator.TryAuthenticate(service.Object, updates.Email, "password");
@@ -234,8 +234,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void LoginWithUpdatedUsername()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -255,7 +255,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
             provider.UpdateUser(updates, null);
 
             var service = new Mock<IServiceBase>();
-            var authenticator = new UserAuthenticator(connection);
+            var authenticator = new UserAuthenticator(db.Connection);
 
             bool isAuthenticatedWithOldUsername = authenticator.TryAuthenticate(service.Object, user.ForumUsername, "password");
             bool isAuthenticatedWithNewUsername = authenticator.TryAuthenticate(service.Object, updates.ForumUsername, "password");
@@ -267,8 +267,8 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void ChangePassword() 
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
-            var provider = new UserProvider(connection);
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
 
             var user = new UserDto {
                 Email = "jsmith@company.com",
@@ -283,7 +283,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
             provider.UpdateUser(updates, "changed_password");
 
             var service = new Mock<IServiceBase>();
-            var authenticator = new UserAuthenticator(connection);
+            var authenticator = new UserAuthenticator(db.Connection);
 
             bool isAuthenticatedWithOldPassword = authenticator.TryAuthenticate(service.Object, user.ForumUsername, "password");
             bool isAuthenticatedWithNewPassword = authenticator.TryAuthenticate(service.Object, user.ForumUsername, "changed_password");

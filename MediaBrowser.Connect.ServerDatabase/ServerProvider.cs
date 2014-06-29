@@ -27,7 +27,7 @@ namespace MediaBrowser.Connect.ServerDatabase
             }
         }
 
-        public ServerInstanceAuthInfoDto RegisterServerInstance(string name, string ipAddress)
+        public ServerInstanceAuthInfoDto RegisterServerInstance(string name, string url)
         {
             using (IDbConnection db = _connectionFactory.Open()) {
                 string id = GenerateGuidString();
@@ -37,7 +37,7 @@ namespace MediaBrowser.Connect.ServerDatabase
                 var serverData = new ServerData {
                     Id = id,
                     Name = name,
-                    IpAddress = ipAddress,
+                    Url = url,
                     Salt = salt,
                     AccessKey = CalculateHashedKey(key, salt)
                 };
@@ -47,22 +47,22 @@ namespace MediaBrowser.Connect.ServerDatabase
                 return new ServerInstanceAuthInfoDto {
                     Id = id,
                     Name = name,
-                    IpAddress = ipAddress,
+                    Url = url,
                     AccessKey = key
                 };
             }
         }
 
-        public ServerInstanceDto UpdateServerInstance(string serverId, string name, string ipAddress)
+        public ServerInstanceDto UpdateServerInstance(string serverId, string name, string url)
         {
             using (IDbConnection db = _connectionFactory.Open()) {
-                db.UpdateOnly(new ServerData {Name = name, IpAddress = ipAddress}, s => new {s.Name, s.IpAddress}, s => s.Id == serverId);
+                db.UpdateOnly(new ServerData {Name = name, Url = url}, s => new {s.Name, IpAddress = s.Url}, s => s.Id == serverId);
             }
 
             return new ServerInstanceDto {
                 Id = serverId,
                 Name = name,
-                IpAddress = ipAddress
+                Url = url
             };
         }
 
@@ -89,7 +89,7 @@ namespace MediaBrowser.Connect.ServerDatabase
                     UserId = tokenData.UserId,
                     CreatedAt = tokenData.CreatedAt,
                     AccessToken = tokenData.AccessToken,
-                    ServerIpAddress = serverData.IpAddress
+                    ServerUrl = serverData.Url
                 };
             }
         }
@@ -114,7 +114,7 @@ namespace MediaBrowser.Connect.ServerDatabase
 
                 return tokens.Select(t => new ServerAccessTokenDto {
                     ServerId = t.ServerId,
-                    ServerIpAddress = serverData.IpAddress,
+                    ServerUrl = serverData.Url,
                     UserId = t.UserId,
                     AccessToken = t.AccessToken,
                     CreatedAt = t.CreatedAt
@@ -127,7 +127,7 @@ namespace MediaBrowser.Connect.ServerDatabase
             using (IDbConnection db = _connectionFactory.Open()) {
                 var jn = new JoinSqlBuilder<ServerAccessTokenDataEx, ServerAccessTokenData>();
 
-                jn.Join<ServerAccessTokenData, ServerData>(t => t.ServerId, s => s.Id, t => new {t.UserId, t.AccessToken, t.CreatedAt}, s => new {s.Id, s.IpAddress})
+                jn.Join<ServerAccessTokenData, ServerData>(t => t.ServerId, s => s.Id, t => new {t.UserId, t.AccessToken, t.CreatedAt}, s => new {s.Id, s.Url})
                   .Where<ServerAccessTokenData>(t => t.UserId == userId);
 
                 string sql = jn.ToSql();
@@ -144,7 +144,7 @@ namespace MediaBrowser.Connect.ServerDatabase
 
         private string GenerateGuidString()
         {
-            return new Guid().ToString();
+            return Guid.NewGuid().ToString();
         }
     }
 }

@@ -23,7 +23,8 @@ namespace MediaBrowser.Connect.ServerDatabase
         [Alias("Id")]
         public string ServerId { get; set; }
         [BelongTo(typeof(ServerData))]
-        public string ServerIp { get; set; }
+        [Alias("Url")]
+        public string ServerUrl { get; set; }
         [BelongTo(typeof(ServerAccessTokenData))]
         public int UserId { get; set; }
         [BelongTo(typeof(ServerAccessTokenData))]
