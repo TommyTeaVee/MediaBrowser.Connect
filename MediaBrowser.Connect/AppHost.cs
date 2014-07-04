@@ -1,5 +1,6 @@
 ﻿using System.Configuration;
 using Funq;
+using MediaBrowser.Connect.ServerDatabase;
 using MediaBrowser.Connect.Services.Auth;
 using MediaBrowser.Connect.Services.Users;
 using MediaBrowser.Connect.UserDatabase;
@@ -34,8 +35,11 @@ namespace MediaBrowser.Connect
                 IncludeRegistrationService = false,
             };
 
+            var connectionString = GetDbConnectionString();
+
             Plugins.Add(authFeature);
-            Plugins.Add(new UserDatabaseFeature {ConnectionString = GetDbConnectionString()});
+            Plugins.Add(new UserDatabaseFeature {ConnectionString = connectionString});
+            Plugins.Add(new ServerDatabaseFeature {ConnectionString = connectionString});
             Plugins.Add(new SwaggerFeature());
             Plugins.Add(new ValidationFeature());
 

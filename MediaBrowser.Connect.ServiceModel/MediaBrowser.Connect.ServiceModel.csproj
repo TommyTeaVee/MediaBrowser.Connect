@@ -50,6 +50,7 @@
     <Compile Include="RemoteAccess\DeleteAccessToken.cs" />
     <Compile Include="RemoteAccess\GetAccessTokens.cs" />
     <Compile Include="RemoteAccess\GetUsersAccessTokens.cs" />
+    <Compile Include="RemoteAccess\InviteGuest.cs" />
     <Compile Include="RemoteAccess\ServerAccessTokenDto.cs" />
     <Compile Include="Servers\RegisterServerInstance.cs" />
     <Compile Include="Servers\ServerInstanceAuthInfoDto.cs" />

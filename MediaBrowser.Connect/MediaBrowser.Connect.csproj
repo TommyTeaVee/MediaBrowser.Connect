@@ -89,6 +89,10 @@
       <Project>{1a038584-cbcf-4b55-98a4-dd6704389a42}</Project>
       <Name>MediaBrowser.Connect.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MediaBrowser.Connect.ServerDatabase\MediaBrowser.Connect.ServerDatabase.csproj">
+      <Project>{9d5b7d8f-9eeb-430a-9017-07aa55eb5152}</Project>
+      <Name>MediaBrowser.Connect.ServerDatabase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MediaBrowser.Connect.ServiceModel\MediaBrowser.Connect.ServiceModel.csproj">
       <Project>{bb32d72d-885f-4ea6-89d8-2cb0ed3afbf5}</Project>
       <Name>MediaBrowser.Connect.ServiceModel</Name>

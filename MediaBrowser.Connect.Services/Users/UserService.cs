@@ -33,7 +33,7 @@ namespace MediaBrowser.Connect.Services.Users
         public object Get(GetUser request)
         {
             IAuthSession session = GetSession();
-            if (session == null || !session.IsAuthenticated || (session.Id != request.Id.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
+            if (session == null || !session.IsAuthenticated || (session.UserAuthId != request.Id.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
                 throw new UnauthorizedAccessException();
             }
 
@@ -53,7 +53,7 @@ namespace MediaBrowser.Connect.Services.Users
         public UserDto Post(UpdateUser request)
         {
             IAuthSession session = GetSession();
-            if (session == null || !session.IsAuthenticated || (session.Id != request.Id.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
+            if (session == null || !session.IsAuthenticated || (session.UserAuthId != request.Id.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
                 throw new UnauthorizedAccessException();
             }
 
