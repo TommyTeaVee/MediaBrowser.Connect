@@ -1,6 +1,9 @@
-﻿using MediaBrowser.Connect.Interfaces;
+﻿using System.Data;
+using System.Globalization;
+using MediaBrowser.Connect.Interfaces;
 using MediaBrowser.Connect.Interfaces.Auth;
 using ServiceStack;
+using ServiceStack.Auth;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
 
@@ -14,14 +17,14 @@ namespace MediaBrowser.Connect.UserDatabase
         {
             _connectionFactory = connectionFactory;
 
-            using (var db = _connectionFactory.Open()) {
+            using (IDbConnection db = _connectionFactory.Open()) {
                 db.CreateTableIfNotExists<UserAuthData>();
             }
         }
 
         public bool TryAuthenticate(IServiceBase authService, string username, string password)
         {
-            using (var db = _connectionFactory.Open()) {
+            using (IDbConnection db = _connectionFactory.Open()) {
                 UserAuthData user;
 
                 if (IsUsernameEmailAddress(username)) {
@@ -34,8 +37,23 @@ namespace MediaBrowser.Connect.UserDatabase
                     return false;
                 }
 
-                var hashedPassword = CalculateHashedPassword(password, user.Salt);
-                return user.Password == hashedPassword;
+                string hashedPassword = CalculateHashedPassword(password, user.Salt);
+                if (user.Password != hashedPassword) {
+                    return false;
+                }
+
+                IAuthSession session = authService.GetSession();
+                session.UserAuthId = user.Id.ToString(CultureInfo.InvariantCulture);
+                session.UserAuthName = session.UserName = user.Username;
+                session.Email = user.Email;
+                session.IsAuthenticated = true;
+
+                var profile = db.SingleById<UserProfileData>(user.Id);
+                if (profile != null) {
+                    session.DisplayName = profile.DisplayName;
+                }
+
+                return true;
             }
         }
 
