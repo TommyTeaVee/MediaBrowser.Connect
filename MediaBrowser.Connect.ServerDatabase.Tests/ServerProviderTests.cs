@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediaBrowser.Connect.ServiceModel.RemoteAccess;
 using NUnit.Framework;
 using ServiceStack;
 using ServiceStack.OrmLite;
@@ -49,7 +50,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
-            var tokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess");
+            var tokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess", UserType.LinkedAccount);
 
             Assert.That(tokenInfo.ServerId, Is.EqualTo(serverInfo.Id));
             Assert.That(tokenInfo.UserId, Is.EqualTo(1));
@@ -64,7 +65,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
             var provider = new ServerProvider(db);
 
-            provider.RegisterServerAccessToken("invalid server id", 1, "ihaveaccess");
+            provider.RegisterServerAccessToken("invalid server id", 1, "ihaveaccess", UserType.LinkedAccount);
         }
 
         [Test]
@@ -74,8 +75,8 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
-            var tokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess");
-            var updatedTokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveotheraccess");
+            var tokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess", UserType.LinkedAccount);
+            var updatedTokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveotheraccess", UserType.LinkedAccount);
 
             Assert.That(updatedTokenInfo.ServerId, Is.EqualTo(serverInfo.Id));
             Assert.That(updatedTokenInfo.UserId, Is.EqualTo(1));
@@ -90,8 +91,8 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
-            var token1 = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess");
-            var token2 = provider.RegisterServerAccessToken(serverInfo.Id, 2, "ihaveotheraccess");
+            var token1 = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess", UserType.LinkedAccount);
+            var token2 = provider.RegisterServerAccessToken(serverInfo.Id, 2, "ihaveotheraccess", UserType.LinkedAccount);
 
             var tokens = provider.GetServerAccessTokens(serverInfo.Id).ToList();
 
@@ -116,7 +117,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
-            var tokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess");
+            var tokenInfo = provider.RegisterServerAccessToken(serverInfo.Id, 1, "ihaveaccess", UserType.LinkedAccount);
 
             var tokens = provider.GetServerAccessTokens(serverInfo.Id).ToList();
 
@@ -138,9 +139,9 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             var serverInfo1 = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
             var serverInfo2 = provider.RegisterServerInstance("test2", "test2.com:8096/mediabrowser/");
 
-            var token1 = provider.RegisterServerAccessToken(serverInfo1.Id, 1, "ihaveaccess");
-            var token2 = provider.RegisterServerAccessToken(serverInfo2.Id, 1, "ihaveotheraccess");
-            var token3 = provider.RegisterServerAccessToken(serverInfo2.Id, 2, "ihaveotheraccess");
+            var token1 = provider.RegisterServerAccessToken(serverInfo1.Id, 1, "ihaveaccess", UserType.LinkedAccount);
+            var token2 = provider.RegisterServerAccessToken(serverInfo2.Id, 1, "ihaveotheraccess", UserType.LinkedAccount);
+            var token3 = provider.RegisterServerAccessToken(serverInfo2.Id, 2, "ihaveotheraccess", UserType.LinkedAccount);
 
             var tokens = provider.GetUsersServerAccessTokens(1).ToList();
 

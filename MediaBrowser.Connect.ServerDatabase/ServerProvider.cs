@@ -66,7 +66,7 @@ namespace MediaBrowser.Connect.ServerDatabase
             };
         }
 
-        public ServerAccessTokenDto RegisterServerAccessToken(string serverId, int userId, string accessToken)
+        public ServerAccessTokenDto RegisterServerAccessToken(string serverId, int userId, string accessToken, UserType type)
         {
             using (IDbConnection db = _connectionFactory.Open()) {
                 var serverData = db.SingleById<ServerData>(serverId);
@@ -79,18 +79,17 @@ namespace MediaBrowser.Connect.ServerDatabase
                     ServerId = serverId,
                     UserId = userId,
                     AccessToken = accessToken,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    UserType = type,
+                    IsActive = true
                 };
 
                 db.Save(tokenData);
 
-                return new ServerAccessTokenDto {
-                    ServerId = tokenData.ServerId,
-                    UserId = tokenData.UserId,
-                    CreatedAt = tokenData.CreatedAt,
-                    AccessToken = tokenData.AccessToken,
-                    ServerUrl = serverData.Url
-                };
+                var dto = tokenData.ConvertTo<ServerAccessTokenDto>();
+                dto.ServerUrl = serverData.Url;
+
+                return dto;
             }
         }
 
@@ -112,12 +111,11 @@ namespace MediaBrowser.Connect.ServerDatabase
                 var serverData = db.SingleById<ServerData>(serverId);
                 List<ServerAccessTokenData> tokens = db.Where<ServerAccessTokenData>(new {ServerId = serverId});
 
-                return tokens.Select(t => new ServerAccessTokenDto {
-                    ServerId = t.ServerId,
-                    ServerUrl = serverData.Url,
-                    UserId = t.UserId,
-                    AccessToken = t.AccessToken,
-                    CreatedAt = t.CreatedAt
+                return tokens.Select(t => {
+                    var dto = t.ConvertTo<ServerAccessTokenDto>();
+                    dto.ServerUrl = serverData.Url;
+
+                    return dto;
                 });
             }
         }

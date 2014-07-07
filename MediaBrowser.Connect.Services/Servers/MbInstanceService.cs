@@ -65,7 +65,7 @@ namespace MediaBrowser.Connect.Services.Servers
             }
 
             var serverProvider = GetServerProvider();
-            return serverProvider.RegisterServerAccessToken(serverId, int.Parse(session.UserAuthId), request.AccessKey);
+            return serverProvider.RegisterServerAccessToken(serverId, int.Parse(session.UserAuthId), request.AccessKey, UserType.LinkedAccount);
         }
 
         private string AuthenticateServer()
@@ -124,12 +124,7 @@ namespace MediaBrowser.Connect.Services.Servers
             var serverProvider = GetServerProvider();
             return serverProvider.GetUsersServerAccessTokens(request.UserId).ToList();
         }
-
-        public ServerAccessTokenDto Post(InviteGuest request)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         private IServerProvider GetServerProvider()
         {
             var serverProvider = TryResolve<IServerProvider>();

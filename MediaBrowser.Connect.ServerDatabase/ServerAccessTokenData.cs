@@ -1,4 +1,5 @@
 ﻿using System;
+using MediaBrowser.Connect.ServiceModel.RemoteAccess;
 using ServiceStack.DataAnnotations;
 using ServiceStack.Model;
 
@@ -10,6 +11,8 @@ namespace MediaBrowser.Connect.ServerDatabase
         public int UserId { get; set; }
         public string AccessToken { get; set; }
         public DateTime CreatedAt { get; set; }
+        public UserType UserType { get; set; }
+        public bool IsActive { get; set; }
 
         public string Id
         {
@@ -31,5 +34,9 @@ namespace MediaBrowser.Connect.ServerDatabase
         public string AccessToken { get; set; }
         [BelongTo(typeof(ServerAccessTokenData))]
         public DateTime CreatedAt { get; set; }
+        [BelongTo(typeof(ServerAccessTokenData))]
+        public UserType UserType { get; set; }
+        [BelongTo(typeof(ServerAccessTokenData))]
+        public bool IsActive { get; set; }
     }
 }
