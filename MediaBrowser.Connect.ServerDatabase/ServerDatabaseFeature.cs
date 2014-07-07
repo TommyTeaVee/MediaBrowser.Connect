@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediaBrowser.Connect.Interfaces.Auth;
-using MediaBrowser.Connect.Interfaces.Servers;
-using MediaBrowser.Connect.Interfaces.Users;
+﻿using MediaBrowser.Connect.Interfaces.Servers;
 using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
@@ -23,15 +16,16 @@ namespace MediaBrowser.Connect.ServerDatabase
 
         public void Register(IAppHost appHost)
         {
-            var connectionFactory = OpenDatabase();
+            OrmLiteConnectionFactory connectionFactory = OpenDatabase();
 
             appHost.Register(new ServerDatabase {Connection = connectionFactory});
             appHost.RegisterAs<ServerProvider, IServerProvider>();
+            appHost.RegisterAs<ServerAuthenticator, IServerAuthenticator>();
         }
 
         private OrmLiteConnectionFactory OpenDatabase()
         {
-            var connectionString = ConnectionString ?? ":memory:";
+            string connectionString = ConnectionString ?? ":memory:";
             return new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
         }
     }

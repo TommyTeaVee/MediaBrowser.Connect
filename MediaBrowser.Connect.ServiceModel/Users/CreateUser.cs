@@ -2,7 +2,7 @@
 
 namespace MediaBrowser.Connect.ServiceModel.Users
 {
-    [Route("/users", "POST", Summary = "Creates a new user")]
+    [Route("/users", "POST", Summary = "Creates a new user.")]
     public class CreateUser : UserDto, IReturn<UserDto>
     {
         [ApiMember(Description = "The user's password", DataType = "string", IsRequired = true, ParameterType = "query")]

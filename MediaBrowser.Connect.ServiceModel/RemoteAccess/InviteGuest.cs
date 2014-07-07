@@ -2,7 +2,7 @@
 
 namespace MediaBrowser.Connect.ServiceModel.RemoteAccess
 {
-    [Route("/servers/{ServerId}/guests", "POST", Summary = "Invites a guest to access an MBS instance")]
+    [Route("/servers/{ServerId}/guests", "POST", Summary = "Invites a guest to access a Media Browser Server instance.")]
     public class InviteGuest : IReturn<ServerAccessTokenDto>
     {
         [ApiMember(Description = "The MBS instance ID", DataType = "string", IsRequired = true, ParameterType = "path")]

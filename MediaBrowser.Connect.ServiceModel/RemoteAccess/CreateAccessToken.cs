@@ -2,7 +2,7 @@
 
 namespace MediaBrowser.Connect.ServiceModel.RemoteAccess
 {
-    [Route("/servers/{ServerId}/users", "POST", Summary = "Grants an access token for an MB instance to a user")]
+    [Route("/servers/{ServerId}/users", "POST", Summary = "Grants an access token for a Media Browser Server instance to a user.")]
     public class CreateAccessToken : IReturn<ServerAccessTokenDto>
     {
         [ApiMember(Description = "The MBS instance ID", DataType = "string", IsRequired = true, ParameterType = "path")]
