@@ -91,10 +91,17 @@ namespace MediaBrowser.Connect.Services.Servers
             return null;
         }
 
+        private bool AuthenticateUser(int requiredUserId)
+        {
+            IAuthSession session = GetSession();
+            return session != null && session.IsAuthenticated && (session.UserAuthId == requiredUserId.ToString(CultureInfo.InvariantCulture) || session.HasRole(Roles.Admin));
+        }
+
         public void Delete(DeleteAccessToken request)
         {
             var serverId = AuthenticateServer();
-            if (serverId == null || serverId != request.ServerId) {
+            var isServerAuthenticated = serverId != null && serverId == request.ServerId;
+            if (!isServerAuthenticated && !AuthenticateUser(request.UserId)) {
                 throw new UnauthorizedAccessException();
             }
 
@@ -116,8 +123,7 @@ namespace MediaBrowser.Connect.Services.Servers
         [Authenticate]
         public IList<ServerAccessTokenDto> Get(GetUsersAccessTokens request)
         {
-            IAuthSession session = GetSession();
-            if (session == null || !session.IsAuthenticated || (session.UserAuthId != request.UserId.ToString(CultureInfo.InvariantCulture) && !session.HasRole(Roles.Admin))) {
+            if (!AuthenticateUser(request.UserId)) {
                 throw new UnauthorizedAccessException();
             }
 
