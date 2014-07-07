@@ -143,7 +143,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         }
 
         [Test]
-        public void UpdateUserProfileData() 
+        public void UpdateUserProfileDataBothNames() 
         {
             var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
             var provider = new UserProvider(db);
@@ -171,7 +171,61 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         }
 
         [Test]
-        public void UpdateUserAuthData()
+        public void UpdateUserProfileDataDisplayName()
+        {
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
+
+            var user = new UserDto {
+                Email = "jsmith@company.com",
+                ForumUsername = "jsmith",
+                ForumDisplayName = "John Smith",
+                DisplayName = "John"
+            };
+
+            var created = provider.CreateUser(user, "password");
+
+            var updates = new UserDto {
+                Id = created.Id,
+                DisplayName = "Updated Display Name"
+            };
+
+            var result = provider.UpdateUser(updates, null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ForumDisplayName, Is.EqualTo(user.ForumDisplayName));
+            Assert.That(result.DisplayName, Is.EqualTo(updates.DisplayName));
+        }
+
+        [Test]
+        public void UpdateUserProfileDataForumName()
+        {
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
+
+            var user = new UserDto {
+                Email = "jsmith@company.com",
+                ForumUsername = "jsmith",
+                ForumDisplayName = "John Smith",
+                DisplayName = "John"
+            };
+
+            var created = provider.CreateUser(user, "password");
+
+            var updates = new UserDto {
+                Id = created.Id,
+                ForumDisplayName = "Updated Forum Display Name"
+            };
+
+            var result = provider.UpdateUser(updates, null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ForumDisplayName, Is.EqualTo(updates.ForumDisplayName));
+            Assert.That(result.DisplayName, Is.EqualTo(user.DisplayName));
+        }
+
+        [Test]
+        public void UpdateUserAuthDataEmailAndUsername()
         {
             var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
             var provider = new UserProvider(db);
@@ -196,6 +250,60 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result.ForumUsername, Is.EqualTo(updates.ForumUsername));
             Assert.That(result.Email, Is.EqualTo(updates.Email));
+        }
+
+        [Test]
+        public void UpdateUserAuthDataEmail()
+        {
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
+
+            var user = new UserDto {
+                Email = "jsmith@company.com",
+                ForumUsername = "jsmith",
+                ForumDisplayName = "John Smith",
+                DisplayName = "John"
+            };
+
+            var created = provider.CreateUser(user, "password");
+
+            var updates = new UserDto {
+                Id = created.Id,
+                Email = "jsmith_updated@company.com"
+            };
+
+            var result = provider.UpdateUser(updates, null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ForumUsername, Is.EqualTo(user.ForumUsername));
+            Assert.That(result.Email, Is.EqualTo(updates.Email));
+        }
+
+        [Test]
+        public void UpdateUserAuthDataUsername()
+        {
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new UserProvider(db);
+
+            var user = new UserDto {
+                Email = "jsmith@company.com",
+                ForumUsername = "jsmith",
+                ForumDisplayName = "John Smith",
+                DisplayName = "John"
+            };
+
+            var created = provider.CreateUser(user, "password");
+
+            var updates = new UserDto {
+                Id = created.Id,
+                ForumUsername = "jsmith_updated",
+            };
+
+            var result = provider.UpdateUser(updates, null);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.ForumUsername, Is.EqualTo(updates.ForumUsername));
+            Assert.That(result.Email, Is.EqualTo(user.Email));
         }
 
         [Test]

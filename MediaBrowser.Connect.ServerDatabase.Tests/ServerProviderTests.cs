@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using ServiceStack;
 using ServiceStack.OrmLite;
 
 namespace MediaBrowser.Connect.ServerDatabase.Tests
@@ -54,6 +55,16 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
             Assert.That(tokenInfo.UserId, Is.EqualTo(1));
             Assert.That(tokenInfo.ServerUrl, Is.EqualTo(serverInfo.Url));
             Assert.That(tokenInfo.AccessToken, Is.EqualTo("ihaveaccess"));
+        }
+
+        [Test]
+        [ExpectedException(typeof(HttpError), ExpectedMessage="Unrecognized server ID")]
+        public void RegisterAccessTokenThrowsOnInvalidServerId() 
+        {
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var provider = new ServerProvider(db);
+
+            provider.RegisterServerAccessToken("invalid server id", 1, "ihaveaccess");
         }
 
         [Test]
