@@ -50,6 +50,12 @@ namespace MediaBrowser.Connect.Services.Users
         }
 
         [Authenticate]
+        public UserDto Put(UpdateUser request)
+        {
+            return Post(request);
+        }
+
+        [Authenticate]
         public UserDto Post(UpdateUser request)
         {
             IAuthSession session = GetSession();

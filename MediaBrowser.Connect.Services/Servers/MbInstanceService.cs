@@ -21,6 +21,23 @@ namespace MediaBrowser.Connect.Services.Servers
         }
     }
 
+    public class UpdateServerInstanceValidator : AbstractValidator<UpdateServerInstance> 
+    {
+        public UpdateServerInstanceValidator()
+        {
+            RuleFor(r => r.Name).NotEmpty();
+            RuleFor(r => r.Url).NotEmpty();
+        }
+    }
+
+    public class CreateAccessTokenValidator : AbstractValidator<CreateAccessToken> 
+    {
+        public CreateAccessTokenValidator()
+        {
+            RuleFor(r => r.AccessKey).NotEmpty();
+        }
+    }
+
     public class MbInstanceService : Service
     {
         public ServerInstanceAuthInfoDto Post(RegisterServerInstance request)
