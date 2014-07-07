@@ -43,14 +43,17 @@ namespace MediaBrowser.Connect.UserDatabase
                 }
 
                 IAuthSession session = authService.GetSession();
-                session.UserAuthId = user.Id.ToString(CultureInfo.InvariantCulture);
-                session.UserAuthName = session.UserName = user.Username;
-                session.Email = user.Email;
-                session.IsAuthenticated = true;
 
-                var profile = db.SingleById<UserProfileData>(user.Id);
-                if (profile != null) {
-                    session.DisplayName = profile.DisplayName;
+                if (session != null) {
+                    session.UserAuthId = user.Id.ToString(CultureInfo.InvariantCulture);
+                    session.UserAuthName = session.UserName = user.Username;
+                    session.Email = user.Email;
+                    session.IsAuthenticated = true;
+
+                    var profile = db.SingleById<UserProfileData>(user.Id);
+                    if (profile != null) {
+                        session.DisplayName = profile.DisplayName;
+                    }
                 }
 
                 return true;

@@ -53,7 +53,25 @@ namespace MediaBrowser.Connect.Services.Servers
 
         private string AuthenticateServer()
         {
-            throw new NotImplementedException();
+            var accessKeyHeader = Request.GetHeader("Access-Key");
+            if (string.IsNullOrEmpty(accessKeyHeader)) {
+                return null;
+            }
+            
+            var parts = accessKeyHeader.Split(':');
+            if (parts.Length != 2) {
+                return null;
+            }
+
+            var serverId = parts[0];
+            var accessKey = parts[1];
+
+            var authenticator = GetServerAuthenticator();
+            if (authenticator.TryAuthenticate(serverId, accessKey)) {
+                return serverId;
+            }
+
+            return null;
         }
 
         public void Delete(DeleteAccessToken request)
@@ -103,6 +121,16 @@ namespace MediaBrowser.Connect.Services.Servers
             }
 
             return serverProvider;
+        }
+
+        private IServerAuthenticator GetServerAuthenticator()
+        {
+            var serverAuthenticator = TryResolve<IServerAuthenticator>();
+            if (serverAuthenticator == null) {
+                throw new InvalidOperationException("No server authenticator has been registered.");
+            }
+
+            return serverAuthenticator;
         }
     }
 }
