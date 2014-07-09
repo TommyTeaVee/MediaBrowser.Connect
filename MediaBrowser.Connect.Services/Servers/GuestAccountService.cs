@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MediaBrowser.Connect.Interfaces.Servers;
 using MediaBrowser.Connect.ServiceModel.RemoteAccess;
 using ServiceStack;
@@ -14,7 +9,7 @@ namespace MediaBrowser.Connect.Services.Servers
     {
         public void Post(InviteGuest request)
         {
-            var invitationId = Guid.NewGuid().ToString();
+            string invitationId = Guid.NewGuid().ToString();
             Cache.Add(invitationId, request);
 
             //todo send invitation email
@@ -22,11 +17,18 @@ namespace MediaBrowser.Connect.Services.Servers
 
         public object Any(AcceptInvitation request)
         {
+            //todo direct to proper invitation completion pages
+
             var invitation = Cache.Get<InviteGuest>(request.InvitationId);
             if (invitation != null) {
-                var serverProvider = GetServerProvider();
+                IServerProvider serverProvider = GetServerProvider();
                 serverProvider.RegisterServerAccessToken(invitation.ServerId, invitation.UserId, invitation.AccessKey, UserType.Guest);
+
+                Cache.Remove(request.InvitationId);
+                return "Guest account activated.";
             }
+
+            return "Guest invitation expired.";
         }
 
         private IServerProvider GetServerProvider()
