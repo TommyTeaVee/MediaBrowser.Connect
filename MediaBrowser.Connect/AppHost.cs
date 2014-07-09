@@ -23,7 +23,7 @@ namespace MediaBrowser.Connect
         public override void Configure(Container container)
         {
             JsConfig.DateHandler = DateHandler.ISO8601;
-            LogManager.LogFactory = new NLogFactory();
+            //LogManager.LogFactory = new NLogFactory();
             
             var authProviders = new IAuthProvider[] {
                 new CredentialsAuthenticator(),
