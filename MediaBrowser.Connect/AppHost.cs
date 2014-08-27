@@ -1,7 +1,9 @@
 ﻿using System.Configuration;
 using Funq;
 using MediaBrowser.Connect.ServerDatabase;
+using MediaBrowser.Connect.ServiceModel.Logging;
 using MediaBrowser.Connect.Services.Auth;
+using MediaBrowser.Connect.Services.Logging;
 using MediaBrowser.Connect.Services.Users;
 using MediaBrowser.Connect.UserDatabase;
 using ServiceStack;
@@ -23,7 +25,7 @@ namespace MediaBrowser.Connect
         public override void Configure(Container container)
         {
             JsConfig.DateHandler = DateHandler.ISO8601;
-            //LogManager.LogFactory = new NLogFactory();
+            LogManager.LogFactory = new ServiceLogFactory(new NlogManager(ConfigurationManager.AppSettings["LogDirectory"], "MBConnectService"));
             
             var authProviders = new IAuthProvider[] {
                 new CredentialsAuthenticator(),
@@ -55,6 +57,11 @@ namespace MediaBrowser.Connect
             }
 
             return null;
+        }
+
+        private string GetLogDirectory()
+        {
+            return ConfigurationManager.AppSettings.Get("LogDirectory") ?? @"..\Logs";
         }
     }
 }
