@@ -28,6 +28,23 @@ namespace MediaBrowser.Connect.Services.Users
             IUserProvider userProvider = GetUserProvider();
             return userProvider.CreateUser(request, request.Password);
         }
+
+        [Authenticate]
+        public object Get(GetCurrentUser request)
+        {
+            IAuthSession session = GetSession();
+            if (session == null || !session.IsAuthenticated) {
+                throw new UnauthorizedAccessException();
+            }
+
+            var id = int.Parse(session.UserAuthId);
+            var cacheKey = UserCacheKey(id);
+
+            return Request.ToOptimizedResultUsingCache(Cache, cacheKey, () => {
+                IUserProvider userProvider = GetUserProvider();
+                return userProvider.GetUser(id);
+            });
+        }
         
         [Authenticate]
         public object Get(GetUser request)

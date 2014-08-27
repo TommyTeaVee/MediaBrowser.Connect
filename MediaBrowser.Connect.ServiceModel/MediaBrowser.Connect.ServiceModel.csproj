@@ -58,6 +58,7 @@
     <Compile Include="Servers\ServerInstanceDto.cs" />
     <Compile Include="Servers\UpdateServerInstance.cs" />
     <Compile Include="Users\CreateUser.cs" />
+    <Compile Include="Users\GetCurrentUser.cs" />
     <Compile Include="Users\GetUser.cs" />
     <Compile Include="Users\UpdateUser.cs" />
     <Compile Include="Users\UserDto.cs" />
