@@ -48,6 +48,11 @@ namespace MediaBrowser.Connect.Services.Servers
 
         public ServerInstanceDto Post(UpdateServerInstance request)
         {
+            var serverId = AuthenticateServer();
+            if (serverId == null || serverId != request.ServerId) {
+                throw new UnauthorizedAccessException();
+            }
+
             var serverProvider = GetServerProvider();
             return serverProvider.UpdateServerInstance(request.ServerId, request.Name, request.Url);
         }
