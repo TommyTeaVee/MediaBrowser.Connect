@@ -53,8 +53,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ServiceStack.OrmLite.4.0.30\lib\net40\ServiceStack.OrmLite.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.OrmLite.MySql">
-      <HintPath>..\packages\ServiceStack.OrmLite.MySql.4.0.23\lib\net40\ServiceStack.OrmLite.MySql.dll</HintPath>
+    <Reference Include="ServiceStack.OrmLite.MySql, Version=4.0.30.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ServiceStack.OrmLite.MySql.4.0.30\lib\net40\ServiceStack.OrmLite.MySql.dll</HintPath>
     </Reference>
     <Reference Include="ServiceStack.OrmLite.Sqlite">
       <HintPath>..\packages\ServiceStack.OrmLite.Sqlite.Mono.4.0.30\lib\net40\ServiceStack.OrmLite.Sqlite.dll</HintPath>
