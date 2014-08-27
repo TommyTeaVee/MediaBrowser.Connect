@@ -12,7 +12,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void AuthenticateFailsWithIncorrectPassword()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider);
+            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
             var authenticator = new UserAuthenticator(connection);
 
             using (IDbConnection db = connection.Open()) {
@@ -30,7 +30,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void AuthenticateFalseWhenUserDoesNotExist()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider);
+            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
             var authenticator = new UserAuthenticator(connection);
 
             var service = new Mock<IServiceBase>();
@@ -43,7 +43,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void AuthenticateSucceedsWithCorrectLoginWithEmail()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider);
+            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
             var authenticator = new UserAuthenticator(connection);
 
             using (IDbConnection db = connection.Open()) {
@@ -61,7 +61,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void AuthenticateSucceedsWithCorrectLoginWithUsername()
         {
-            var connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider);
+            var connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider);
             var authenticator = new UserAuthenticator(connection);
 
             using (IDbConnection db = connection.Open()) {
