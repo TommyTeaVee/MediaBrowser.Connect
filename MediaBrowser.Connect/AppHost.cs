@@ -51,7 +51,7 @@ namespace MediaBrowser.Connect
 
         private string GetDbConnectionString()
         {
-            var connection = ConfigurationManager.ConnectionStrings["SqliteDatabase"];
+            var connection = ConfigurationManager.ConnectionStrings["MySQLDatabase"];
             if (connection != null) {
                 return connection.ConnectionString;
             }
