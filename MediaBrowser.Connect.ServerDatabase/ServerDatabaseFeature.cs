@@ -26,7 +26,7 @@ namespace MediaBrowser.Connect.ServerDatabase
         private OrmLiteConnectionFactory OpenDatabase()
         {
             string connectionString = ConnectionString ?? ":memory:";
-            return new OrmLiteConnectionFactory(connectionString, SqliteDialect.Provider);
+            return new OrmLiteConnectionFactory(connectionString, MySqlDialect.Provider);
         }
     }
 }

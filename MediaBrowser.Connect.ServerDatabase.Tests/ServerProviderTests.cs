@@ -16,7 +16,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void RegisterServer()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var info = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
@@ -31,7 +31,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void UpdateServer()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var info = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
@@ -46,7 +46,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void RegisterAccessToken()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
@@ -62,7 +62,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [ExpectedException(typeof(HttpError), ExpectedMessage="Unrecognized server ID")]
         public void RegisterAccessTokenThrowsOnInvalidServerId() 
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             provider.RegisterServerAccessToken("invalid server id", 1, "ihaveaccess", UserType.LinkedAccount);
@@ -71,7 +71,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void ModifyAccessToken()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
@@ -87,7 +87,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void GetAccessTokensForServer()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
@@ -113,7 +113,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void RevokeAccessToken()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var serverInfo = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");
@@ -133,7 +133,7 @@ namespace MediaBrowser.Connect.ServerDatabase.Tests
         [Test]
         public void GetAccessTokensForUser()
         {
-            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new ServerDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new ServerProvider(db);
 
             var serverInfo1 = provider.RegisterServerInstance("test", "test.com:8096/mediabrowser/");

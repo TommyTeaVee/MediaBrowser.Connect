@@ -2,7 +2,6 @@
 using System.Data;
 using MediaBrowser.Connect.Interfaces.Users;
 using MediaBrowser.Connect.ServiceModel.Users;
-using Mono.Data.Sqlite;
 using ServiceStack;
 using ServiceStack.Data;
 using ServiceStack.OrmLite;
@@ -50,7 +49,7 @@ namespace MediaBrowser.Connect.UserDatabase
 
                     return CreateDto(authData, profileData);
                 }
-            } catch (SqliteException e) {
+            } catch (Exception e) {
                 if (e.Message.Contains("constraint violation")) {
                     if (e.Message.Contains("Username")) {
                         throw HttpError.Conflict("A user with that username already exists");

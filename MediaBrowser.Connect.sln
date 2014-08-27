@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect", "MediaBrowser.Connect\MediaBrowser.Connect.csproj", "{B6373A93-0D4D-4FFF-9C23-5529F58C457A}"
 EndProject
@@ -15,8 +15,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Interfaces", "MediaBrowser.Connect.Api\MediaBrowser.Connect.Interfaces.csproj", "{1A038584-CBCF-4B55-98A4-DD6704389A42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.UserDatabase", "MediaBrowser.Connect.UserDatabase\MediaBrowser.Connect.UserDatabase.csproj", "{0F4386EE-550A-4FD5-8E24-D588BA557730}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaBrowser.Connect.Services", "MediaBrowser.Connect.Services\MediaBrowser.Connect.Services.csproj", "{8A628C30-63BD-4B98-A66C-569FE68F4FEF}"
 EndProject
@@ -69,11 +67,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{0F4386EE-550A-4FD5-8E24-D588BA557730} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
-		{945A0D9F-4FDF-4EA0-9D5D-153F655DC925} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
-		{9D5B7D8F-9EEB-430A-9017-07AA55EB5152} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
-		{BF4640C8-06E8-461D-B588-459AA88A95BB} = {1D8A3A3C-6D5F-48F8-B319-28DE681F4D37}
 	EndGlobalSection
 EndGlobal

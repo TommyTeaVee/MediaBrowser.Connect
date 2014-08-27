@@ -12,7 +12,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void CanLoginAfterCreatingUser()
         {
-            var db = new UserDatabase {Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider)};
+            var db = new UserDatabase {Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider)};
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -35,7 +35,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void CreateUser()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -59,7 +59,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [ExpectedException(typeof (HttpError), ExpectedMessage = "A user with that email address already exists")]
         public void CreateUserFailsOnDuplicateEmail()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -85,7 +85,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [ExpectedException(typeof (HttpError), ExpectedMessage = "A user with that username already exists")]
         public void CreateUserFailsOnDuplicateUsername()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -111,7 +111,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [ExpectedException(typeof (HttpError), ExpectedMessage = "User with ID 30 not found")]
         public void GetUserFailsWithUnrecognizedId()
         {
-            var connection = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var connection = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(connection);
 
             provider.GetUser(30);
@@ -120,7 +120,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void GetUserSuccess()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -145,7 +145,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserProfileDataBothNames() 
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -173,7 +173,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserProfileDataDisplayName()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -200,7 +200,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserProfileDataForumName()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -227,7 +227,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserAuthDataEmailAndUsername()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -255,7 +255,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserAuthDataEmail()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -282,7 +282,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void UpdateUserAuthDataUsername()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -309,7 +309,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void LoginWithUpdatedEmail()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -342,7 +342,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void LoginWithUpdatedUsername()
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
@@ -375,7 +375,7 @@ namespace MediaBrowser.Connect.UserDatabase.Tests
         [Test]
         public void ChangePassword() 
         {
-            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", SqliteDialect.Provider) };
+            var db = new UserDatabase { Connection = new OrmLiteConnectionFactory(":memory:", MySqlDialect.Provider) };
             var provider = new UserProvider(db);
 
             var user = new UserDto {
