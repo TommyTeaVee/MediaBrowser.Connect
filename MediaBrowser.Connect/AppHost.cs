@@ -51,7 +51,7 @@ namespace MediaBrowser.Connect
 
         private string GetDbConnectionString()
         {
-            var connection = ConfigurationManager.ConnectionStrings["MySQLDatabase"];
+            var connection = ConfigurationManager.ConnectionStrings["MySqlDatabaseTest"];
             if (connection != null) {
                 return connection.ConnectionString;
             }
